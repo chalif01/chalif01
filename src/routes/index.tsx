@@ -182,7 +182,7 @@ function Index() {
                 <Download className="size-4" /> DOWNLOAD CV
               </a>
               <a
-                href="#contact"
+                href="mailto:chalifhussein@gmail.com"
                 className="inline-flex items-center gap-2 border border-border px-5 py-3 text-xs tracking-[0.2em] transition-colors hover:bg-accent"
               >
                 <Mail className="size-4" /> CONTACT ME
@@ -192,8 +192,24 @@ function Index() {
 
           <div className="flex items-end justify-between">
             <div className="flex gap-4 text-muted-foreground">
-              <Instagram className="size-4" />
-              <MessageCircle className="size-4" />
+              <a
+                href="https://instagram.com/chalif01_"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="transition-colors hover:text-foreground"
+              >
+                <Instagram className="size-4" />
+              </a>
+              <a
+                href="https://wa.me/250794744054"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp"
+                className="transition-colors hover:text-foreground"
+              >
+                <MessageCircle className="size-4" />
+              </a>
             </div>
             <a href="#projects" className="label-xs flex flex-col items-center gap-1">
               PROJECTS
