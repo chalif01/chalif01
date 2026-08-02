@@ -2,11 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Download, Mail, Instagram, MessageCircle, ChevronDown } from "lucide-react";
 
-import portrait from "@/assets/profile-portrait.jpg";
+import portraitAsset from "@/assets/chalif-portrait.png.asset.json";
 import hardware1 from "@/assets/project-hardware-1.jpg";
 import hardware2 from "@/assets/project-hardware-2.jpg";
 import forex1 from "@/assets/project-forex-1.jpg";
 import forex2 from "@/assets/project-forex-2.jpg";
+
+const portrait = portraitAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -152,8 +154,8 @@ function Index() {
       <section className="relative grid min-h-screen grid-cols-1 lg:grid-cols-[1fr_0.9fr]">
         <div className="flex flex-col justify-between px-6 py-8 sm:px-12">
           <div className="label-xs leading-relaxed">
-            <p>MUHANGA, RWANDA</p>
-            <p>+250 000 000 000</p>
+            <p>KIGALI, RWANDA</p>
+            <p>+250 794 744 054</p>
           </div>
 
           <div className="animate-fade-up py-16">
@@ -180,7 +182,7 @@ function Index() {
                 <Download className="size-4" /> DOWNLOAD CV
               </a>
               <a
-                href="#contact"
+                href="mailto:chalifhussein@gmail.com"
                 className="inline-flex items-center gap-2 border border-border px-5 py-3 text-xs tracking-[0.2em] transition-colors hover:bg-accent"
               >
                 <Mail className="size-4" /> CONTACT ME
@@ -190,8 +192,24 @@ function Index() {
 
           <div className="flex items-end justify-between">
             <div className="flex gap-4 text-muted-foreground">
-              <Instagram className="size-4" />
-              <MessageCircle className="size-4" />
+              <a
+                href="https://instagram.com/chalif01_"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="transition-colors hover:text-foreground"
+              >
+                <Instagram className="size-4" />
+              </a>
+              <a
+                href="https://wa.me/250794744054"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp"
+                className="transition-colors hover:text-foreground"
+              >
+                <MessageCircle className="size-4" />
+              </a>
             </div>
             <a href="#projects" className="label-xs flex flex-col items-center gap-1">
               PROJECTS
@@ -204,8 +222,8 @@ function Index() {
           <img
             src={portrait}
             alt="Chalif Ali Hussein, IT systems specialist"
-            width={1024}
-            height={1536}
+            width={605}
+            height={1075}
             className="absolute inset-0 size-full object-cover grayscale"
           />
           <p className="absolute bottom-6 right-6 max-w-[80%] text-right text-xs italic text-foreground/80 sm:text-sm">
@@ -266,9 +284,9 @@ function Index() {
             src={portrait}
             alt="Chalif Ali Hussein"
             loading="lazy"
-            width={1024}
-            height={1536}
-            className="aspect-square w-40 object-cover grayscale"
+            width={605}
+            height={1075}
+            className="aspect-square w-40 object-cover object-top grayscale"
           />
           <div>
             <h2 className="text-3xl font-bold tracking-tight">CHALIF</h2>
@@ -281,10 +299,10 @@ function Index() {
           <div>
             <h3 className="label-xs">Contact</h3>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li>📍 Muhanga, Rwanda</li>
-              <li>📞 +250 000 000 000</li>
-              <li>✉ chalif@example.com</li>
-              <li>📷 @chalif</li>
+              <li>📍 Kigali, Rwanda</li>
+              <li>📞 0794744054</li>
+              <li>✉ chalifhussein@gmail.com</li>
+              <li>📷 @chalif01_</li>
             </ul>
           </div>
 
