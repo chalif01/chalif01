@@ -111,7 +111,7 @@ function AdminPage() {
     const { id, ...rest } = profile;
     const { error } = await supabase.from("site_profile").update(rest).eq("id", id);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Details saved");
     void refresh();
   }
@@ -123,7 +123,7 @@ function AdminPage() {
       const path = await uploadMedia(file, folder);
       const { error } = await supabase
         .from("site_profile")
-        .update({ [field]: path })
+        .update({ [field]: path } as Partial<SiteProfile>)
         .eq("id", profile.id);
       if (error) throw error;
       setProfile({ ...profile, [field]: path });
@@ -139,7 +139,7 @@ function AdminPage() {
   async function saveProject(p: SiteProject) {
     const { id, ...rest } = p;
     const { error } = await supabase.from("projects").update(rest).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Project saved");
     void refresh();
   }
@@ -148,13 +148,13 @@ function AdminPage() {
     const { error } = await supabase
       .from("projects")
       .insert({ title: "New project", tag: "Category", description: "", sort_order: projects.length + 1 });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     void refresh();
   }
 
   async function removeProject(id: string) {
     const { error } = await supabase.from("projects").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     void refresh();
   }
 
@@ -173,7 +173,7 @@ function AdminPage() {
   async function saveSkill(s: SiteSkill) {
     const { id, ...rest } = s;
     const { error } = await supabase.from("skills").update(rest).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Skill saved");
     void refresh();
   }
@@ -182,20 +182,20 @@ function AdminPage() {
     const { error } = await supabase
       .from("skills")
       .insert({ name: "New skill", value: 50, sort_order: skills.length + 1 });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     void refresh();
   }
 
   async function removeSkill(id: string) {
     const { error } = await supabase.from("skills").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     void refresh();
   }
 
   async function changePassword() {
-    if (newPassword.length < 6) return toast.error("Password must be at least 6 characters");
+    if (newPassword.length < 6) { toast.error("Password must be at least 6 characters"); return; }
     const { error } = await supabase.auth.updateUser({ password: newPassword });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setNewPassword("");
     toast.success("Password updated");
   }
