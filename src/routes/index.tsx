@@ -213,10 +213,27 @@ function Index() {
             </div>
           </div>
 
-          <div className="animate-fade-up py-16">
-            <p className="label-xs">I&apos;AM|</p>
-            <h1 className="mt-3 text-6xl font-bold tracking-tight sm:text-8xl">{p.first_name}</h1>
-            <p className="mt-1 text-2xl font-light tracking-[0.3em] text-muted-foreground sm:text-3xl">
+          <div className={`py-16 ${booted ? "animate-fade-up" : "opacity-0"}`}>
+            <p className="label-xs">I'AM|</p>
+            <h1 className="mt-3 text-6xl font-bold tracking-tight sm:text-8xl">
+              {booted &&
+                p.first_name.split("").map((ch, i) => (
+                  <span
+                    key={i}
+                    className="inline-block animate-name-letter"
+                    style={{ animationDelay: `${i * 0.08}s` }}
+                  >
+                    {ch === " " ? "\u00A0" : ch}
+                  </span>
+                ))}
+              {!booted && p.first_name}
+            </h1>
+            <p
+              className={`mt-1 text-2xl font-light tracking-[0.3em] text-muted-foreground sm:text-3xl ${
+                booted ? "animate-name-slide" : "opacity-0"
+              }`}
+              style={{ animationDelay: `${p.first_name.length * 0.08}s` }}
+            >
               {p.last_name}
             </p>
             <p className="mt-10 text-sm text-muted-foreground">
