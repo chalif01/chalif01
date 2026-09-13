@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Download, Mail, Instagram, MessageCircle, ChevronDown, Moon, Sun, Plus } from "lucide-react";
 
-import portraitAsset from "@/assets/chalif-portrait.png.asset.json";
+import portrait from "@/assets/chalif-portrait.jpg";
 import hardware1 from "@/assets/project-hardware-1.jpg";
 import hardware2 from "@/assets/project-hardware-2.jpg";
 import forex1 from "@/assets/project-forex-1.jpg";
@@ -11,7 +11,7 @@ import forex2 from "@/assets/project-forex-2.jpg";
 import { loadSiteData } from "@/lib/site-data";
 import { useTheme } from "@/lib/theme";
 
-const portrait = portraitAsset.url;
+const fallbackPortrait = portrait;
 
 export const Route = createFileRoute("/")({
   head: () => ({
