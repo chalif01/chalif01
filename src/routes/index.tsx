@@ -11,7 +11,7 @@ import forex2 from "@/assets/project-forex-2.jpg";
 import { loadSiteData } from "@/lib/site-data";
 import { useTheme } from "@/lib/theme";
 
-const portrait = portraitAsset.url;
+const fallbackPortrait = portrait;
 
 export const Route = createFileRoute("/")({
   head: () => ({
