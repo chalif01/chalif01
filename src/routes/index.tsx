@@ -247,13 +247,28 @@ function Index() {
               ))}
             </div>
             <div className="mt-10 flex flex-wrap gap-3">
-              <a
-                href={data?.cvUrl ?? "#profile"}
-                {...(data?.cvUrl ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="inline-flex items-center gap-2 border border-border px-5 py-3 text-xs tracking-[0.2em] transition-colors hover:bg-accent"
+              <button
+                type="button"
+                disabled={!data?.cvUrl}
+                onClick={async () => {
+                  if (!data?.cvUrl) return;
+                  try {
+                    const res = await fetch(data.cvUrl);
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "Chalif-Ali-Hussein-CV.pdf";
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  } catch {
+                    window.open(data.cvUrl, "_blank");
+                  }
+                }}
+                className="inline-flex items-center gap-2 border border-border px-5 py-3 text-xs tracking-[0.2em] transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <Download className="size-4" /> DOWNLOAD CV
-              </a>
+              </button>
               <a
                 href={`mailto:${p.email}`}
                 className="inline-flex items-center gap-2 border border-border px-5 py-3 text-xs tracking-[0.2em] transition-colors hover:bg-accent"
