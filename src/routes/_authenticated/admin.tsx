@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Loader2, LogOut, Moon, Plus, Sun, Trash2 } from "lucide-react";
+import { FileText, Loader2, LogOut, Moon, Plus, Sun, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -242,6 +242,69 @@ function AdminPage() {
         </div>
       </header>
 
+      <Section title="Profile photo & CV">
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="flex flex-col items-start gap-4 border border-border p-6">
+            <p className="text-sm font-bold tracking-[0.2em]">PROFILE PHOTO</p>
+            {data?.portraitUrl ? (
+              <img
+                src={data.portraitUrl}
+                alt="Current portrait"
+                className="aspect-square w-32 object-cover object-top grayscale"
+              />
+            ) : (
+              <p className="text-xs text-muted-foreground">Using default photo. Upload a new one below.</p>
+            )}
+            <label
+              htmlFor="portrait"
+              className={`${btnCls} cursor-pointer bg-foreground text-background hover:bg-foreground/80`}
+            >
+              {saving ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}
+              UPLOAD PHOTO
+            </label>
+            <input
+              id="portrait"
+              type="file"
+              accept="image/*"
+              className="sr-only"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void onUpload(f, "portrait", "portrait_url");
+                e.target.value = "";
+              }}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-4 border border-border p-6">
+            <p className="text-sm font-bold tracking-[0.2em]">CV DOCUMENT</p>
+            {data?.cvUrl ? (
+              <a href={data.cvUrl} target="_blank" rel="noreferrer" className="text-xs underline">
+                <FileText className="mr-1 inline size-4" /> View current CV
+              </a>
+            ) : (
+              <p className="text-xs text-muted-foreground">No CV uploaded yet. Visitors can't download it until you upload one.</p>
+            )}
+            <label
+              htmlFor="cv"
+              className={`${btnCls} cursor-pointer bg-foreground text-background hover:bg-foreground/80`}
+            >
+              {saving ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}
+              UPLOAD CV (PDF)
+            </label>
+            <input
+              id="cv"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              className="sr-only"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void onUpload(f, "cv", "cv_url");
+                e.target.value = "";
+              }}
+            />
+          </div>
+        </div>
+      </Section>
+
       <Section title="Personal details">
         <div className="grid gap-6 md:grid-cols-2">
           {profile &&
@@ -274,46 +337,6 @@ function AdminPage() {
         </button>
       </Section>
 
-      <Section title="Portrait & CV">
-        <div className="grid gap-8 sm:grid-cols-2">
-          <div>
-            {data?.portraitUrl && (
-              <img
-                src={data.portraitUrl}
-                alt="Current portrait"
-                className="mb-4 aspect-square w-32 object-cover object-top grayscale"
-              />
-            )}
-            <label className="label-xs" htmlFor="portrait">
-              Replace portrait photo
-            </label>
-            <input
-              id="portrait"
-              type="file"
-              accept="image/*"
-              onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0], "portrait", "portrait_url")}
-              className="mt-2 block w-full text-xs text-muted-foreground"
-            />
-          </div>
-          <div>
-            {data?.cvUrl && (
-              <a href={data.cvUrl} target="_blank" rel="noreferrer" className="label-xs underline">
-                View current CV
-              </a>
-            )}
-            <label className="label-xs mt-4 block" htmlFor="cv">
-              Upload CV document (PDF/DOCX)
-            </label>
-            <input
-              id="cv"
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0], "cv", "cv_url")}
-              className="mt-2 block w-full text-xs text-muted-foreground"
-            />
-          </div>
-        </div>
-      </Section>
 
       <Section title="Projects">
         <div className="space-y-10">
