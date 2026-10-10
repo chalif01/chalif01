@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import { claimAdmin } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -52,7 +51,6 @@ function AuthPage() {
         toast.success("Check your email to confirm your account.");
         return;
       }
-      await claimAdmin().catch(() => undefined);
       navigate({ to: "/admin", replace: true });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not sign in");

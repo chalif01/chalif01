@@ -5,7 +5,6 @@ import { FileText, Loader2, LogOut, Moon, Plus, Sun, Trash2, Upload } from "luci
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import { claimAdmin } from "@/lib/admin.functions";
 import { useTheme } from "@/lib/theme";
 import {
   loadSiteData,
@@ -72,19 +71,18 @@ function AdminPage() {
   const [newPassword, setNewPassword] = useState("");
 
   useEffect(() => {
-    claimAdmin()
-      .then(async () => {
-        const { data: u } = await supabase.auth.getUser();
-        if (!u.user) return setAdmin(false);
-        const { data: role } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", u.user.id)
-          .eq("role", "admin")
-          .maybeSingle();
-        setAdmin(!!role);
-      })
-      .catch(() => setAdmin(false));
+    (async () => {
+      // Check the role directly in the browser so this works on any host (Lovable, Vercel, ...).
+      const { data: u } = await supabase.auth.getUser();
+      if (!u.user) return setAdmin(false);
+      const { data: role } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", u.user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      setAdmin(!!role);
+    })().catch(() => setAdmin(false));
   }, []);
 
   useEffect(() => {
