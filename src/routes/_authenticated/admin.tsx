@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { FileText, Loader2, LogOut, Moon, Plus, Sun, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
+import { AdminVault } from "@/components/AdminVault";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useTheme } from "@/lib/theme";
@@ -448,6 +449,10 @@ function AdminPage() {
         <button onClick={addSkill} className={`${btnCls} mt-8`}>
           <Plus className="size-4" /> ADD SKILL
         </button>
+      </Section>
+
+      <Section title="Private store — texts, passwords, images & videos">
+        <AdminVault />
       </Section>
 
       <Section title="Account password">
