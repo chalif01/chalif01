@@ -21,7 +21,7 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [email, setEmail] = useState("");
+  const [rawEmail, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -34,6 +34,8 @@ function AuthPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
+    // Phones often add a capital letter or trailing space to the email — clean it up.
+    const email = rawEmail.trim().toLowerCase();
     try {
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
@@ -77,7 +79,10 @@ function AuthPage() {
               id="email"
               type="email"
               required
-              value={email}
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="email"
+              value={rawEmail}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-2 w-full border border-border bg-transparent px-4 py-3 text-sm outline-none focus:border-foreground"
             />
@@ -90,6 +95,9 @@ function AuthPage() {
               id="password"
               type="password"
               required
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="current-password"
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
